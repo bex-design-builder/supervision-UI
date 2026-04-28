@@ -1,0 +1,58 @@
+.new-job-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(26, 28, 30);
+    flex-direction: column;
+    transition-property: translate;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+.new-job-page.page-visible {
+    translate: 0 0;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.page-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-bottom-width: 1px;
+    flex-shrink: 0;
+}
+
+.page-title {
+    color: rgb(232, 234, 237);
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+/* 44×44 touch target */
+.btn-close {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    color: rgb(176, 182, 188);
+    font-size: 16px;
+    -unity-text-align: middle-center;
+    padding: 0;
+}
+
+.btn-close:hover  { background-color: rgba(255, 255, 255, 0.10); }
+.btn-close:active { background-color: rgba(255, 255, 255, 0.04); }
+
+/* ── Content area ─────────────────────────────────────────── */
+.page-content {
+    flex: 1;
+    padding: 24px 20px;
+}

@@ -1,0 +1,64 @@
+.root {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(30, 33, 36);
+}
+
+.map-viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* ── Map controls column (E-stop + zoom) ───────────────────── */
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ── E-stop button ─────────────────────────────────────────── */
+.btn-estop {
+    width: 44px;
+    height: 44px;
+    background-color: rgb(192, 57, 43);
+    border-width: 0;
+    border-radius: 12px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    padding: 0;
+    margin-bottom: 12px;
+}
+
+.btn-estop:hover  { background-color: rgb(169, 50, 38); }
+.btn-estop:active { background-color: rgb(146, 43, 33); }
+
+/* ── Zoom controls ─────────────────────────────────────────── */
+.zoom-controls {
+    flex-direction: column;
+}
+
+.btn-zoom {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(58, 62, 68, 0.92);
+    border-color: rgba(255, 255, 255, 0.08);
+    border-width: 1px;
+    border-radius: 12px;
+    color: rgb(232, 234, 237);
+    font-size: 20px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-center;
+    padding: 0;
+}
+
+.btn-zoom-in  { margin-bottom: 10px; }
+
+.btn-zoom:hover  { background-color: rgba(77, 81, 88, 0.95); }
+.btn-zoom:active { background-color: rgba(48, 52, 58, 0.95); }

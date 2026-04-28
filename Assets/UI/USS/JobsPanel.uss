@@ -1,0 +1,148 @@
+/* ════════════════════════════════════════════════════════════════════
+   JOB CARDS — matches Bobcat Fleet Control ftp-job style
+   ════════════════════════════════════════════════════════════════════ */
+
+.job-card {
+    flex-direction: column;
+    padding: 14px 16px;
+    background-color: rgb(32, 36, 42);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+/* ── Status pill ─────────────────────────────────────────────────── */
+.job-status-pill {
+    align-self: flex-start;
+    font-size: 10px;
+    -unity-font-style: bold;
+    padding: 3px 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    margin-bottom: 8px;
+    border-width: 0;
+}
+
+.job-status-pill--active  { background-color: rgba(61, 138, 98, 0.18);  color: rgb(90, 173, 126);  }
+.job-status-pill--paused  { background-color: rgba(239, 68, 68, 0.15);  color: rgb(239, 68, 68);   }
+.job-status-pill--pending { background-color: rgba(255, 255, 255, 0.05); color: rgb(140, 148, 158); }
+
+/* ── Job name ────────────────────────────────────────────────────── */
+.job-name {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: rgb(232, 234, 237);
+    white-space: normal;
+    margin-bottom: 10px;
+}
+
+/* ── Progress bar ────────────────────────────────────────────────── */
+.job-progress-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.job-bar-track {
+    flex: 1;
+    height: 4px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+    margin-right: 8px;
+}
+
+.job-bar-fill {
+    height: 4px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.job-bar-fill--active  { background-color: rgb(61, 138, 98);  }
+.job-bar-fill--paused  { background-color: rgba(239, 68, 68, 0.5); }
+.job-bar-fill--pending { background-color: rgba(255, 255, 255, 0.15); }
+
+.job-time {
+    font-size: 10px;
+    color: rgba(176, 182, 188, 0.55);
+    flex-shrink: 0;
+}
+
+/* ── Vehicle pills ───────────────────────────────────────────────── */
+.job-avatars {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.job-vehicle-pill {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(42, 46, 54);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 10px;
+    margin-right: 6px;
+    margin-bottom: 4px;
+}
+
+.job-vehicle-dot {
+    width: 20px;
+    height: 20px;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.job-avatar--green  { background-color: rgb(74, 138, 98);   }
+.job-avatar--blue   { background-color: rgb(110, 180, 202); }
+.job-avatar--purple { background-color: rgb(120, 80, 200);  }
+
+.job-vehicle-name {
+    font-size: 12px;
+    color: rgb(176, 182, 188);
+}
+
+/* ── New Job page footer ─────────────────────────────────────────── */
+.page-footer {
+    padding: 16px 20px;
+    flex-shrink: 0;
+    border-top-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.btn-create-job {
+    background-color: rgb(255, 255, 255);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    height: 48px;
+    color: rgb(15, 16, 18);
+    font-size: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.btn-create-job:hover  { background-color: rgb(230, 230, 230); }
+.btn-create-job:active { background-color: rgb(210, 210, 210); }

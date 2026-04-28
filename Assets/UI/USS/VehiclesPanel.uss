@@ -1,0 +1,283 @@
+/* ════════════════════════════════════════════════════════════════════
+   VEHICLE FAB
+   ════════════════════════════════════════════════════════════════════ */
+
+.vehicle-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.btn-vehicles-fab {
+    background-color: rgb(36, 40, 46);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.10);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 8px 14px;
+    transition-property: background-color, border-color;
+    transition-duration: 0.9s;
+}
+
+.btn-vehicles-fab--alert {
+    background-color: rgba(239, 68, 68, 0.06);
+    border-color: rgba(239, 68, 68, 0.35);
+}
+
+/* Pulse: C# toggles this class every 900 ms while alert is active */
+.btn-vehicles-fab--pulse-high {
+    background-color: rgba(239, 68, 68, 0.11);
+    border-color: rgba(239, 68, 68, 0.65);
+}
+
+/* ── FAB stat pills ──────────────────────────────────────────────── */
+.vtog-stats {
+    flex-direction: row;
+    align-items: center;
+}
+
+.vtog-stat {
+    flex-direction: row;
+    align-items: center;
+    margin-right: 12px;
+}
+
+.vtog-stat:last-child { margin-right: 0; }
+
+.vtog-dot {
+    width: 7px;
+    height: 7px;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+.vtog-dot--alert  { background-color: rgb(239, 68, 68);  }
+.vtog-dot--active { background-color: rgb(61, 212, 48);  }
+.vtog-dot--idle   { background-color: rgba(176, 182, 188, 0.5); }
+
+.vtog-label { font-size: 13px; color: rgb(176, 182, 188); }
+.vtog-stat--alert  .vtog-label { color: rgb(239, 68, 68);  }
+.vtog-stat--active .vtog-label { color: rgb(232, 234, 237); }
+
+/* ════════════════════════════════════════════════════════════════════
+   VEHICLES PANEL
+   ════════════════════════════════════════════════════════════════════ */
+
+.vehicles-panel {
+    position: absolute;
+    top: 76px;
+    left: 20px;
+    right: 20px;
+    max-height: 62%;
+    background-color: rgb(25, 28, 32);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.10);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ── Panel header ────────────────────────────────────────────────── */
+.vehicles-panel-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 12px 10px 12px;
+    border-bottom-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.vehicles-filter-row {
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.vehicles-filter-pill {
+    height: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 6px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(176, 182, 188);
+    font-size: 12px;
+    transition-property: background-color, color;
+    transition-duration: 0.15s;
+}
+
+.vehicles-filter-pill--selected {
+    background-color: rgb(58, 62, 68);
+    color: rgb(232, 234, 237);
+    border-color: rgba(255, 255, 255, 0.0);
+}
+
+.btn-close-vehicles {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    color: rgb(176, 182, 188);
+    font-size: 14px;
+    -unity-text-align: middle-center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+/* ── Vehicle list ────────────────────────────────────────────────── */
+.vehicles-list {
+    flex: 1;
+}
+
+.vehicles-list > #unity-content-container {
+    flex-direction: column;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.vehicles-group {
+    flex-direction: column;
+    margin-bottom: 14px;
+    margin-left: 14px;
+    margin-right: 14px;
+}
+
+.vehicles-group-label {
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgba(176, 182, 188, 0.6);
+    padding-left: 4px;
+    margin-bottom: 6px;
+}
+
+/* ── Vehicle card ────────────────────────────────────────────────── */
+.vehicle-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 10px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.07);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgb(32, 36, 42);
+    margin-bottom: 6px;
+}
+
+.vehicle-card--intervention,
+.vehicle-card--paused {
+    background-color: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.38);
+}
+
+/* ── Avatar ──────────────────────────────────────────────────────── */
+.vehicle-avatar {
+    width: 36px;
+    height: 36px;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.vehicle-avatar--green  { background-color: rgb(74, 138, 98);  }
+.vehicle-avatar--blue   { background-color: rgb(110, 180, 202); }
+.vehicle-avatar--purple { background-color: rgb(120, 80, 200);  }
+
+/* ── Vehicle info ────────────────────────────────────────────────── */
+.vehicle-info {
+    flex-direction: column;
+    flex: 1;
+}
+
+.vehicle-name {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: rgb(232, 234, 237);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.vehicle-status-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.vehicle-status-dot {
+    width: 6px;
+    height: 6px;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+.vehicle-status-dot--active       { background-color: rgb(61, 212, 48); }
+.vehicle-status-dot--idle         { background-color: rgba(176, 182, 188, 0.4); }
+.vehicle-status-dot--paused       { background-color: rgb(239, 68, 68); }
+.vehicle-status-dot--intervention { background-color: rgb(234, 67, 53); }
+
+.vehicle-status-text {
+    font-size: 12px;
+    color: rgb(176, 182, 188);
+}
+
+/* ── Stop / Resume buttons ───────────────────────────────────────── */
+.btn-stop {
+    padding: 6px 12px;
+    border-width: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(192, 57, 43);
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    -unity-font-style: bold;
+    flex-shrink: 0;
+}
+
+.btn-stop:hover  { background-color: rgb(169, 50, 38); }
+.btn-stop:active { background-color: rgb(146, 43, 33); }
+
+.btn-resume {
+    padding: 6px 12px;
+    border-width: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(58, 62, 68);
+    color: rgb(232, 234, 237);
+    font-size: 12px;
+    -unity-font-style: bold;
+    flex-shrink: 0;
+}
+
+.btn-resume:hover  { background-color: rgb(77, 81, 88); }
+.btn-resume:active { background-color: rgb(48, 52, 58); }

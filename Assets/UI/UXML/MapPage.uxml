@@ -1,0 +1,97 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/UI/USS/MapPage.uss" />
+    <ui:Style src="project://database/Assets/UI/USS/BottomSheet.uss" />
+    <ui:Style src="project://database/Assets/UI/USS/NewJobPage.uss" />
+    <ui:Style src="project://database/Assets/UI/USS/VehiclesPanel.uss" />
+    <ui:Style src="project://database/Assets/UI/USS/JobsPanel.uss" />
+
+    <ui:VisualElement name="root" class="root">
+
+        <!-- Map fills the screen -->
+        <ui:VisualElement name="map-viewport" class="map-viewport" />
+
+        <!-- Vehicle FAB — top left -->
+        <ui:VisualElement class="vehicle-controls">
+            <ui:Button name="btn-vehicles-fab" class="btn-vehicles-fab" />
+        </ui:VisualElement>
+
+        <!-- Vehicles panel — drops down from FAB -->
+        <ui:VisualElement name="vehicles-panel" class="vehicles-panel">
+            <ui:VisualElement class="vehicles-panel-header">
+                <ui:VisualElement class="vehicles-filter-row">
+                    <ui:Button name="btn-filter-all"        text="All"        class="vehicles-filter-pill vehicles-filter-pill--selected" />
+                    <ui:Button name="btn-filter-needs-help" text="Needs help" class="vehicles-filter-pill" />
+                    <ui:Button name="btn-filter-working"    text="Working"    class="vehicles-filter-pill" />
+                    <ui:Button name="btn-filter-idle"       text="Idle"       class="vehicles-filter-pill" />
+                </ui:VisualElement>
+                <ui:Button name="btn-close-vehicles" text="✕" class="btn-close-vehicles" />
+            </ui:VisualElement>
+            <ui:ScrollView name="vehicles-list" class="vehicles-list"
+                           vertical-scroller-visibility="Hidden"
+                           horizontal-scroller-visibility="Hidden" />
+        </ui:VisualElement>
+
+        <!-- Map controls — right edge column: E-stop then zoom -->
+        <ui:VisualElement name="map-controls" class="map-controls">
+            <ui:Button name="btn-estop" text="&#x25A0;" class="btn-estop" />
+            <ui:VisualElement name="zoom-controls" class="zoom-controls">
+                <ui:Button name="btn-zoom-in"  text="+" class="btn-zoom btn-zoom-in"  />
+                <ui:Button name="btn-zoom-out" text="−" class="btn-zoom btn-zoom-out" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Bottom sheet — declared before HUDs so it sits behind them by default.
+             At full height the controller calls BringToFront() to cover everything. -->
+        <ui:VisualElement name="bottom-sheet" class="bottom-sheet">
+            <ui:VisualElement name="sheet-handle-area" class="sheet-handle-area">
+                <ui:VisualElement class="sheet-drag-bar" />
+                <ui:VisualElement class="sheet-header-row">
+                    <ui:VisualElement class="sheet-tabs">
+                        <ui:Button name="btn-tab-chat" text="Chat" class="sheet-tab" />
+                        <ui:Button name="btn-tab-jobs" text="Jobs" class="sheet-tab sheet-tab--active" />
+                    </ui:VisualElement>
+                    <ui:Button name="btn-new-job" text="+&#160;&#160;New job" class="btn-new-job" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <!-- Chat panel — visible when Chat tab is active -->
+            <ui:VisualElement name="chat-panel" class="chat-panel">
+                <ui:ScrollView name="chat-messages" class="chat-messages"
+                               vertical-scroller-visibility="Hidden"
+                               horizontal-scroller-visibility="Hidden">
+                    <!-- Messages populated at runtime by ChatController -->
+                </ui:ScrollView>
+                <ui:VisualElement class="chat-input-wrap">
+                    <ui:TextField name="chat-input" label="" class="chat-input"
+                                  placeholder-string="Type a message..." />
+                    <ui:Button name="btn-send" text="↑" class="btn-send" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Jobs panel — visible when Jobs tab is active -->
+            <ui:ScrollView name="sheet-scroll" class="sheet-scroll"
+                           vertical-scroller-visibility="Hidden"
+                           horizontal-scroller-visibility="Hidden">
+                <ui:VisualElement class="jobs-empty-state">
+                    <ui:Label text="Start a new job" class="jobs-empty-label" />
+                    <ui:Button name="btn-new-job-empty" text="+&#160;&#160;New job" class="btn-new-job-primary" />
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+
+
+        <!-- New Job page — full-screen overlay, last in DOM so always on top -->
+        <ui:VisualElement name="new-job-page" class="new-job-page">
+            <ui:VisualElement class="page-header">
+                <ui:Label text="New job" class="page-title" />
+                <ui:Button name="btn-close-new-job" text="✕" class="btn-close" />
+            </ui:VisualElement>
+            <ui:VisualElement class="page-content">
+                <!-- Form fields go here -->
+            </ui:VisualElement>
+            <ui:VisualElement class="page-footer">
+                <ui:Button name="btn-create-job" text="Create job" class="btn-create-job" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

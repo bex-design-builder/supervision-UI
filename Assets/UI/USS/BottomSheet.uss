@@ -1,0 +1,299 @@
+.bottom-sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 72px;
+    background-color: rgb(25, 28, 32);
+    border-color: rgba(255, 255, 255, 0.10);
+    border-top-width: 1px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+}
+
+/* Applied on snap — removed during active drag so height updates are instant */
+.bottom-sheet.sheet-animated {
+    transition-property: height;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+/* ── Handle area ─────────────────────────────────────────────────── */
+.sheet-handle-area {
+    flex-shrink: 0;
+    padding: 12px 20px 14px 20px;
+    align-items: stretch;
+}
+
+.sheet-drag-bar {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.22);
+    align-self: center;
+    margin-bottom: 12px;
+}
+
+.sheet-header-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ── Tab toggle ──────────────────────────────────────────────────── */
+.sheet-tabs {
+    flex-direction: row;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 3px;
+}
+
+.sheet-tab {
+    height: 26px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(176, 182, 188);
+    font-size: 13px;
+    -unity-font-style: normal;
+    transition-property: background-color, color;
+    transition-duration: 0.2s;
+}
+
+.sheet-tab--active {
+    background-color: rgb(58, 62, 68);
+    color: rgb(232, 234, 237);
+    -unity-font-style: bold;
+}
+
+/* ── New Job button — pill shape, neutral gray ───────────────────── */
+.btn-new-job {
+    background-color: rgb(58, 62, 68);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 10px 16px;
+    color: rgb(232, 234, 237);
+    font-size: 13px;
+    -unity-font-style: bold;
+}
+
+.btn-new-job:hover  { background-color: rgb(77, 81, 88); }
+.btn-new-job:active { background-color: rgb(48, 52, 58); }
+
+/* ── Scroll content ──────────────────────────────────────────────── */
+.sheet-scroll {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ── Jobs empty state ────────────────────────────────────────────── */
+.jobs-empty-state {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+}
+
+.jobs-empty-label {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.btn-new-job-primary {
+    background-color: rgb(255, 255, 255);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 10px 20px;
+    color: rgb(15, 16, 18);
+    font-size: 13px;
+    -unity-font-style: bold;
+}
+
+.btn-new-job-primary:hover  { background-color: rgb(230, 230, 230); }
+.btn-new-job-primary:active { background-color: rgb(210, 210, 210); }
+
+/* ════════════════════════════════════════════════════════════════════
+   DESKTOP: fixed left panel — matches Bobcat Fleet Control sidebar
+   ════════════════════════════════════════════════════════════════════ */
+
+.layout-desktop .bottom-sheet {
+    left: 20px;
+    top: 92px;
+    bottom: 20px;
+    width: 340px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.layout-desktop .sheet-drag-bar { display: none; }
+
+.layout-desktop .sheet-handle-area { padding: 16px 20px 12px 20px; }
+
+.layout-desktop .sheet-scroll { flex: 1; }
+
+/* ════════════════════════════════════════════════════════════════════
+   CHAT PANEL
+   ════════════════════════════════════════════════════════════════════ */
+
+.chat-panel {
+    flex: 1;
+    flex-direction: column;
+    display: none;
+}
+
+.chat-panel--visible {
+    display: flex;
+}
+
+/* ── Message list ────────────────────────────────────────────────── */
+.chat-messages {
+    flex: 1;
+}
+
+.chat-messages > #unity-content-container {
+    flex-direction: column;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.message-row {
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.message-row-command {
+    justify-content: flex-end;
+}
+
+.message-row-vehicle {
+    justify-content: flex-start;
+}
+
+/* ── Bubbles ─────────────────────────────────────────────────────── */
+.message-bubble {
+    padding: 10px 14px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    font-size: 14px;
+    white-space: normal;
+    max-width: 75%;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+.command-bubble {
+    background-color: rgb(61, 107, 143);
+    border-width: 1px;
+    border-color: rgba(91, 155, 213, 0.5);
+    color: rgb(255, 255, 255);
+}
+
+.vehicle-bubble {
+    background-color: rgb(58, 62, 68);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.06);
+    color: rgb(232, 234, 237);
+    align-self: flex-start;
+}
+
+/* ── Vehicle row elements ────────────────────────────────────────── */
+.vehicle-message-content {
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+}
+
+.vehicle-sender-name {
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+
+.sender--green  { color: rgb(90, 173, 126);  }
+.sender--blue   { color: rgb(134, 196, 214); }
+.sender--purple { color: rgb(160, 120, 220); }
+
+/* ── Input area ──────────────────────────────────────────────────── */
+.chat-input-wrap {
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 10px 12px;
+    border-top-width: 1px;
+    border-color: rgba(255, 255, 255, 0.10);
+    flex-shrink: 0;
+}
+
+.chat-input {
+    flex: 1;
+    margin-right: 8px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    padding: 0;
+}
+
+.chat-input > .unity-base-field__label {
+    display: none;
+}
+
+.chat-input .unity-base-text-field__input {
+    min-height: 44px;
+    background-color: rgb(58, 62, 68);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    color: rgb(232, 234, 237);
+    font-size: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.chat-input .unity-base-text-field__input:focus {
+    border-width: 1px;
+    border-color: rgba(91, 155, 213, 0.5);
+}
+
+.btn-send {
+    width: 44px;
+    height: 44px;
+    background-color: rgb(13, 14, 16);
+    border-width: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    color: rgb(232, 234, 237);
+    font-size: 18px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.btn-send:hover    { background-color: rgb(26, 28, 30); }
+.btn-send:active   { background-color: rgb(8, 9, 10);  }
+.btn-send:disabled { opacity: 0.3; }
