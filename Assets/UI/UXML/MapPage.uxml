@@ -40,57 +40,70 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
-        <!-- Bottom sheet — declared before HUDs so it sits behind them by default.
-             At full height the controller calls BringToFront() to cover everything. -->
+        <!-- Bottom sheet (mobile) / left panel (desktop) -->
         <ui:VisualElement name="bottom-sheet" class="bottom-sheet">
-            <ui:VisualElement name="sheet-handle-area" class="sheet-handle-area">
-                <ui:VisualElement class="sheet-drag-bar" />
-                <ui:VisualElement class="sheet-header-row">
-                    <ui:VisualElement class="sheet-tabs">
-                        <ui:Button name="btn-tab-chat" text="Chat" class="sheet-tab" />
-                        <ui:Button name="btn-tab-jobs" text="Jobs" class="sheet-tab sheet-tab--active" />
+
+            <!-- Standard mode: tabs + content -->
+            <ui:VisualElement name="sheet-main" class="sheet-main">
+                <ui:VisualElement name="sheet-handle-area" class="sheet-handle-area">
+                    <ui:VisualElement class="sheet-drag-bar" />
+                    <!-- Individual vehicle header: avatar + name + close -->
+                    <ui:VisualElement name="vehicle-header-row" class="vehicle-header-row">
+                        <ui:VisualElement name="vehicle-header-avatar" class="vehicle-header-avatar" />
+                        <ui:Label name="vehicle-header-name" class="vehicle-header-name" text="" />
+                        <ui:Button name="btn-vfilter-close" text="✕" class="btn-close" />
                     </ui:VisualElement>
-                    <ui:Button name="btn-new-job" text="+&#160;&#160;New job" class="btn-new-job" />
+                    <ui:VisualElement class="sheet-header-row">
+                        <ui:VisualElement class="sheet-tabs">
+                            <ui:Button name="btn-tab-chat" text="Chat" class="sheet-tab sheet-tab--active" />
+                            <ui:Button name="btn-tab-jobs" text="Jobs" class="sheet-tab" />
+                        </ui:VisualElement>
+                        <ui:Button name="btn-new-job" text="+&#160;&#160;New job" class="btn-new-job" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
-            </ui:VisualElement>
-            <!-- Chat panel — visible when Chat tab is active -->
-            <ui:VisualElement name="chat-panel" class="chat-panel">
-                <ui:ScrollView name="chat-messages" class="chat-messages"
+
+                <!-- Chat panel -->
+                <ui:VisualElement name="chat-panel" class="chat-panel">
+                    <ui:ScrollView name="chat-messages" class="chat-messages"
+                                   vertical-scroller-visibility="Hidden"
+                                   horizontal-scroller-visibility="Hidden" />
+                    <ui:VisualElement class="chat-input-wrap">
+                        <ui:TextField name="chat-input" label="" class="chat-input"
+                                      placeholder-string="Direct a vehicle or ask anything..." />
+                        <ui:Button name="btn-send" text="↑" class="btn-send" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Jobs panel -->
+                <ui:ScrollView name="sheet-scroll" class="sheet-scroll"
                                vertical-scroller-visibility="Hidden"
                                horizontal-scroller-visibility="Hidden">
-                    <!-- Messages populated at runtime by ChatController -->
+                    <ui:VisualElement class="jobs-empty-state">
+                        <ui:Label text="Start a new job" class="jobs-empty-label" />
+                        <ui:Button name="btn-new-job-empty" text="+&#160;&#160;New job" class="btn-new-job-primary" />
+                    </ui:VisualElement>
                 </ui:ScrollView>
+            </ui:VisualElement>
+
+            <!-- New job panel — swaps in over sheet-main -->
+            <ui:VisualElement name="new-job-panel" class="new-job-panel">
+                <ui:VisualElement name="new-job-handle-area" class="new-job-handle-area">
+                    <ui:VisualElement class="sheet-drag-bar" />
+                </ui:VisualElement>
+                <ui:VisualElement class="new-job-panel-header">
+                    <ui:Label text="New job" class="new-job-panel-title" />
+                    <ui:Button name="btn-close-new-job" text="✕" class="btn-close" />
+                </ui:VisualElement>
+                <ui:ScrollView name="new-job-messages" class="chat-messages"
+                               vertical-scroller-visibility="Hidden"
+                               horizontal-scroller-visibility="Hidden" />
                 <ui:VisualElement class="chat-input-wrap">
-                    <ui:TextField name="chat-input" label="" class="chat-input"
-                                  placeholder-string="Type a message..." />
-                    <ui:Button name="btn-send" text="↑" class="btn-send" />
+                    <ui:TextField name="new-job-input" label="" class="chat-input"
+                                  placeholder-string="What do you want to build?" />
+                    <ui:Button name="btn-new-job-send" text="↑" class="btn-send" />
                 </ui:VisualElement>
             </ui:VisualElement>
 
-            <!-- Jobs panel — visible when Jobs tab is active -->
-            <ui:ScrollView name="sheet-scroll" class="sheet-scroll"
-                           vertical-scroller-visibility="Hidden"
-                           horizontal-scroller-visibility="Hidden">
-                <ui:VisualElement class="jobs-empty-state">
-                    <ui:Label text="Start a new job" class="jobs-empty-label" />
-                    <ui:Button name="btn-new-job-empty" text="+&#160;&#160;New job" class="btn-new-job-primary" />
-                </ui:VisualElement>
-            </ui:ScrollView>
-        </ui:VisualElement>
-
-
-        <!-- New Job page — full-screen overlay, last in DOM so always on top -->
-        <ui:VisualElement name="new-job-page" class="new-job-page">
-            <ui:VisualElement class="page-header">
-                <ui:Label text="New job" class="page-title" />
-                <ui:Button name="btn-close-new-job" text="✕" class="btn-close" />
-            </ui:VisualElement>
-            <ui:VisualElement class="page-content">
-                <!-- Form fields go here -->
-            </ui:VisualElement>
-            <ui:VisualElement class="page-footer">
-                <ui:Button name="btn-create-job" text="Create job" class="btn-create-job" />
-            </ui:VisualElement>
         </ui:VisualElement>
 
     </ui:VisualElement>

@@ -12,6 +12,8 @@ namespace GuidanceUI.UI
         private VisualElement _lastMessage;
         private VisualElement _chatPanel;
         private bool          _chatWasVisible;
+        private Label         _placeholder;
+        private bool          _inputFocused;
 
         void Start()
         {
@@ -25,22 +27,38 @@ namespace GuidanceUI.UI
 
             var welcome = BuildSystem("Hi there, what would you like to get done?");
             _messages.Add(welcome);
-            _lastMessage = welcome;
+
+            var stuck = BuildVehicle("Mark", "‼️ Vehicle stuck", "purple");
+            _messages.Add(stuck);
+            _lastMessage = stuck;
 
             _input.multiline = true;
             _input.RegisterValueChangedCallback(OnInputChanged);
 
+            // Unity's placeholder-string doesn't render on multiline TextFields —
+            // overlay a label instead and toggle it based on focus + content.
+            var inputWrap = root.Q(className: "chat-input-wrap");
+            if (inputWrap != null)
+            {
+                _placeholder = new Label("Direct a vehicle or ask anything...");
+                _placeholder.AddToClassList("chat-placeholder");
+                _placeholder.pickingMode = PickingMode.Ignore;
+                inputWrap.Add(_placeholder);
+            }
+
+            _input.RegisterCallback<FocusInEvent>(_ => { _inputFocused = true;  UpdatePlaceholder(); });
+            _input.RegisterCallback<FocusOutEvent>(_ => { _inputFocused = false; UpdatePlaceholder(); });
+
             _sendBtn?.RegisterCallback<ClickEvent>(_ => Send());
 
-            // TrickleDown so we intercept Enter before the TextField inserts a newline.
-            // Shift+Enter falls through and inserts the newline normally.
+            // TrickleDown intercepts plain Enter to send the message.
+            // Shift+Enter falls through to Unity's native multiline handler which inserts \n.
             _input?.RegisterCallback<KeyDownEvent>(evt =>
             {
-                if ((evt.keyCode == KeyCode.Return || evt.keyCode == KeyCode.KeypadEnter) && !evt.shiftKey)
-                {
-                    Send();
-                    evt.StopPropagation();
-                }
+                if (evt.keyCode != KeyCode.Return && evt.keyCode != KeyCode.KeypadEnter) return;
+                if (evt.shiftKey) return;
+                Send();
+                evt.StopPropagation();
             }, TrickleDown.TrickleDown);
 
             // Scroll to bottom whenever the chat panel becomes visible (tab switch).
@@ -54,6 +72,14 @@ namespace GuidanceUI.UI
         {
             UpdateSendButton();
             UpdateInputHeight();
+            UpdatePlaceholder();
+        }
+
+        private void UpdatePlaceholder()
+        {
+            if (_placeholder == null) return;
+            bool show = string.IsNullOrEmpty(_input?.value) && !_inputFocused;
+            _placeholder.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void UpdateSendButton()
@@ -88,6 +114,7 @@ namespace GuidanceUI.UI
             _input.value = "";
             UpdateSendButton();
             UpdateInputHeight();
+            UpdatePlaceholder();
             _input.Focus();
 
             _messages.schedule.Execute(FixBubbleWidths).StartingIn(150);

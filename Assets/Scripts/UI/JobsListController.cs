@@ -49,6 +49,20 @@ namespace GuidanceUI.UI
             _emptyState = _root.Q(className: "jobs-empty-state");
 
             NewJobPageController.OnJobCreated += HandleJobCreated;
+
+            var blockedJob = new MockJobData
+            {
+                Name          = "Clear debris field",
+                Status        = "blocked",
+                Progress      = 0.3f,
+                EstimatedMins = 0,
+                Vehicles      = new[] { ("purple", "Mark") },
+            };
+
+            if (_emptyState != null)
+                _emptyState.style.display = DisplayStyle.None;
+
+            _scroll?.Add(BuildCard(blockedJob));
         }
 
         void OnDestroy()
@@ -106,7 +120,8 @@ namespace GuidanceUI.UI
 
             track.Add(fill);
 
-            var time = new Label($"{job.EstimatedMins}m left");
+            var timeText = job.Status == "blocked" ? "On hold" : $"{job.EstimatedMins}m left";
+            var time = new Label(timeText);
             time.AddToClassList("job-time");
 
             progressRow.Add(track);
@@ -142,6 +157,7 @@ namespace GuidanceUI.UI
             "active"  => "In progress",
             "paused"  => "Paused",
             "pending" => "Pending",
+            "blocked" => "Blocked",
             _         => s,
         };
     }

@@ -94,6 +94,75 @@
 .btn-new-job:hover  { background-color: rgb(77, 81, 88); }
 .btn-new-job:active { background-color: rgb(48, 52, 58); }
 
+/* ── Sheet main (standard mode wrapper) ─────────────────────────── */
+.sheet-main {
+    flex: 1;
+    flex-direction: column;
+}
+
+/* ── Confirm job action row ──────────────────────────────────────── */
+.new-job-action-row {
+    padding: 4px 20px 8px 20px;
+    align-items: flex-start;
+}
+
+/* ── New job handle area ─────────────────────────────────────────── */
+.new-job-handle-area {
+    flex-shrink: 0;
+    padding: 12px 20px 0;
+    align-items: center;
+}
+
+.layout-desktop .new-job-handle-area { display: none; }
+
+/* ── Individual vehicle header ───────────────────────────────────── */
+.vehicle-header-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.vehicle-header-avatar {
+    width: 26px;
+    height: 26px;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.vehicle-header-name {
+    flex: 1;
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: rgb(232, 234, 237);
+}
+
+
+/* ── New job panel ───────────────────────────────────────────────── */
+.new-job-panel {
+    flex: 1;
+    flex-direction: column;
+    display: none;
+}
+
+.new-job-panel-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 20px 14px 20px;
+    flex-shrink: 0;
+}
+
+.new-job-panel-title {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: rgb(232, 234, 237);
+}
+
 /* ── Scroll content ──────────────────────────────────────────────── */
 .sheet-scroll {
     flex: 1;
@@ -139,7 +208,7 @@
     left: 20px;
     top: 92px;
     bottom: 20px;
-    width: 340px;
+    width: 400px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
@@ -267,6 +336,7 @@
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     color: rgb(232, 234, 237);
+    -unity-cursor-color: rgb(232, 234, 237);
     font-size: 14px;
     padding-left: 14px;
     padding-right: 14px;
@@ -275,6 +345,16 @@
 .chat-input .unity-base-text-field__input:focus {
     border-width: 1px;
     border-color: rgba(91, 155, 213, 0.5);
+}
+
+.chat-placeholder {
+    position: absolute;
+    left: 26px;
+    top: 0;
+    bottom: 0;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 14px;
+    -unity-text-align: middle-left;
 }
 
 .btn-send {

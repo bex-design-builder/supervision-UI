@@ -30,9 +30,10 @@
     border-width: 0;
 }
 
-.job-status-pill--active  { background-color: rgba(61, 138, 98, 0.18);  color: rgb(90, 173, 126);  }
-.job-status-pill--paused  { background-color: rgba(239, 68, 68, 0.15);  color: rgb(239, 68, 68);   }
+.job-status-pill--active  { background-color: rgba(61, 138, 98, 0.18);   color: rgb(90, 173, 126);  }
+.job-status-pill--paused  { background-color: rgba(239, 68, 68, 0.15);   color: rgb(239, 68, 68);   }
 .job-status-pill--pending { background-color: rgba(255, 255, 255, 0.05); color: rgb(140, 148, 158); }
+.job-status-pill--blocked { background-color: rgba(245, 158, 11, 0.15);  color: rgb(245, 158, 11);  }
 
 /* ── Job name ────────────────────────────────────────────────────── */
 .job-name {
@@ -40,7 +41,7 @@
     -unity-font-style: bold;
     color: rgb(232, 234, 237);
     white-space: normal;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 /* ── Progress bar ────────────────────────────────────────────────── */
@@ -70,9 +71,10 @@
     border-bottom-right-radius: 2px;
 }
 
-.job-bar-fill--active  { background-color: rgb(61, 138, 98);  }
-.job-bar-fill--paused  { background-color: rgba(239, 68, 68, 0.5); }
+.job-bar-fill--active  { background-color: rgb(61, 138, 98);          }
+.job-bar-fill--paused  { background-color: rgba(239, 68, 68, 0.5);    }
 .job-bar-fill--pending { background-color: rgba(255, 255, 255, 0.15); }
+.job-bar-fill--blocked { background-color: rgb(245, 158, 11);         }
 
 .job-time {
     font-size: 10px;

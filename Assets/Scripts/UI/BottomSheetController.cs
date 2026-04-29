@@ -19,14 +19,23 @@ namespace GuidanceUI.UI
         private float FullHeight => _parentHeight - TopSliver;
 
         // ── Elements ──────────────────────────────────────────────────────
-        private VisualElement        _root;
-        private VisualElement        _sheet;
-        private VisualElement        _handleArea;
-        private VisualElement        _chatPanel;
-        private ScrollView           _scroll;
-        private NewJobPageController _newJobPage;
-        private Button               _tabChat;
-        private Button               _tabJobs;
+        private VisualElement _root;
+        private VisualElement _sheet;
+        private VisualElement _handleArea;
+        private VisualElement _newJobHandleArea;
+        private VisualElement _chatPanel;
+        private ScrollView    _scroll;
+        private ScrollView    _newJobMessages;
+        private Button        _tabChat;
+        private Button        _tabJobs;
+        private Button        _btnNewJob;
+        private VisualElement _vehicleHeaderRow;
+        private VisualElement _vehicleHeaderAvatar;
+        private Label         _vehicleHeaderName;
+        private Button        _btnVFilterClose;
+
+        private VisualElement ActiveHandle => NewJobPageController.IsOpen ? _newJobHandleArea : _handleArea;
+        private ScrollView    ActiveScroll => NewJobPageController.IsOpen ? _newJobMessages   : _scroll;
 
         // ── State ─────────────────────────────────────────────────────────
         private SnapState _state = SnapState.Peek;
@@ -45,13 +54,24 @@ namespace GuidanceUI.UI
 
         void Start()
         {
-            _root       = GetComponent<UIDocument>().rootVisualElement;
-            _sheet      = _root.Q("bottom-sheet");
-            _handleArea = _root.Q("sheet-handle-area");
-            _chatPanel  = _root.Q("chat-panel");
-            _scroll     = _sheet?.Q<ScrollView>("sheet-scroll");
+            _root             = GetComponent<UIDocument>().rootVisualElement;
+            _sheet            = _root.Q("bottom-sheet");
+            _handleArea       = _root.Q("sheet-handle-area");
+            _newJobHandleArea = _root.Q("new-job-handle-area");
+            _chatPanel        = _root.Q("chat-panel");
+            _scroll           = _sheet?.Q<ScrollView>("sheet-scroll");
+            _newJobMessages   = _sheet?.Q<ScrollView>("new-job-messages");
 
-            if (_chatPanel != null) _chatPanel.style.display = DisplayStyle.None;
+            // Chat is the default active tab
+            if (_chatPanel != null) _chatPanel.style.display = DisplayStyle.Flex;
+            if (_scroll != null)
+            {
+                _scroll.style.display = DisplayStyle.None;
+                _scroll.pickingMode   = PickingMode.Ignore;
+            }
+
+            if (_newJobMessages != null)
+                _newJobMessages.pickingMode = PickingMode.Ignore;
 
             if (_sheet == null || _handleArea == null)
             {
@@ -64,17 +84,22 @@ namespace GuidanceUI.UI
             _root.RegisterCallback<PointerUpEvent>(OnPointerUp,   TrickleDown.TrickleDown);
             _root.RegisterCallback<PointerCancelEvent>(_ => CancelDrag(), TrickleDown.TrickleDown);
 
-            _root.Q<Button>("btn-new-job")?.RegisterCallback<ClickEvent>(OnNewJobClicked);
-            _root.Q<Button>("btn-new-job-empty")?.RegisterCallback<ClickEvent>(OnNewJobClicked);
-            _newJobPage = GetComponent<NewJobPageController>();
-
             _tabChat = _root.Q<Button>("btn-tab-chat");
             _tabJobs = _root.Q<Button>("btn-tab-jobs");
             _tabChat?.RegisterCallback<ClickEvent>(_ => SetTab("chat"));
             _tabJobs?.RegisterCallback<ClickEvent>(_ => SetTab("jobs"));
 
+            _btnNewJob           = _root.Q<Button>("btn-new-job");
+            _vehicleHeaderRow    = _root.Q("vehicle-header-row");
+            _vehicleHeaderAvatar = _root.Q("vehicle-header-avatar");
+            _vehicleHeaderName   = _root.Q<Label>("vehicle-header-name");
+            _btnVFilterClose     = _root.Q<Button>("btn-vfilter-close");
+            _btnVFilterClose?.RegisterCallback<ClickEvent>(_ => ExitVehicleView());
+
             _isDesktop = ResponsiveManager.Current == Breakpoint.Desktop;
-            ResponsiveManager.OnBreakpointChanged += OnBreakpointChanged;
+            ResponsiveManager.OnBreakpointChanged    += OnBreakpointChanged;
+            NewJobPageController.OnJobCreated        += OnJobCreated;
+            VehicleFleetController.OnVehicleSelected += OnVehicleSelected;
 
             ApplyDesktopLayout();
 
@@ -83,7 +108,42 @@ namespace GuidanceUI.UI
 
         void OnDestroy()
         {
-            ResponsiveManager.OnBreakpointChanged -= OnBreakpointChanged;
+            ResponsiveManager.OnBreakpointChanged    -= OnBreakpointChanged;
+            NewJobPageController.OnJobCreated        -= OnJobCreated;
+            VehicleFleetController.OnVehicleSelected -= OnVehicleSelected;
+        }
+
+        private void OnJobCreated() => SetTab("jobs");
+
+        private void OnVehicleSelected(VehicleData vehicle)
+        {
+            if (vehicle == null)
+            {
+                ExitVehicleView();
+                return;
+            }
+
+            // Header avatar — swap colour class
+            if (_vehicleHeaderAvatar != null)
+            {
+                _vehicleHeaderAvatar.RemoveFromClassList("vehicle-avatar--green");
+                _vehicleHeaderAvatar.RemoveFromClassList("vehicle-avatar--blue");
+                _vehicleHeaderAvatar.RemoveFromClassList("vehicle-avatar--purple");
+                _vehicleHeaderAvatar.AddToClassList($"vehicle-avatar--{vehicle.Color}");
+            }
+
+            if (_vehicleHeaderName != null) _vehicleHeaderName.text         = vehicle.Name;
+            if (_vehicleHeaderRow  != null) _vehicleHeaderRow.style.display  = DisplayStyle.Flex;
+            if (_btnNewJob         != null) _btnNewJob.style.display          = DisplayStyle.None;
+            ExpandFromPeek();
+        }
+
+        private void ExitVehicleView()
+        {
+            if (_vehicleHeaderRow != null) _vehicleHeaderRow.style.display = DisplayStyle.None;
+            if (_btnNewJob        != null) _btnNewJob.style.display         = DisplayStyle.Flex;
+            if (VehicleFleetController.SelectedVehicle != null)
+                VehicleFleetController.Deselect();
         }
 
         private void OnBreakpointChanged(Breakpoint bp)
@@ -149,8 +209,9 @@ namespace GuidanceUI.UI
             if (state == SnapState.Full)
                 _sheet.BringToFront();
 
-            if (_scroll != null)
-                _scroll.pickingMode = state == SnapState.Full
+            var activeScroll = ActiveScroll;
+            if (activeScroll != null)
+                activeScroll.pickingMode = state == SnapState.Full
                     ? PickingMode.Position
                     : PickingMode.Ignore;
 
@@ -181,7 +242,10 @@ namespace GuidanceUI.UI
         {
             if (!_ready || _isDesktop) return;
 
-            bool onHandle = _handleArea.worldBound.Contains(evt.position);
+            var activeHandle = ActiveHandle;
+            var activeScroll = ActiveScroll;
+
+            bool onHandle = activeHandle != null && activeHandle.worldBound.Contains(evt.position);
             bool onSheet  = _sheet.worldBound.Contains(evt.position);
 
             if (onHandle)
@@ -198,7 +262,7 @@ namespace GuidanceUI.UI
                 return;
             }
 
-            if (onSheet && _state == SnapState.Full && (_scroll == null || _scroll.scrollOffset.y <= 0.5f))
+            if (onSheet && _state == SnapState.Full && (activeScroll == null || activeScroll.scrollOffset.y <= 0.5f))
             {
                 BeginDrag(evt.position.y);
                 evt.StopPropagation();
@@ -256,11 +320,6 @@ namespace GuidanceUI.UI
             }
 
             if (!_isDesktop) ExpandFromPeek();
-        }
-
-        private void OnNewJobClicked(ClickEvent evt)
-        {
-            _newJobPage?.Open();
         }
 
         public void ExpandFromPeek()

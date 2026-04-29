@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +19,9 @@ namespace GuidanceUI.UI
     [RequireComponent(typeof(UIDocument))]
     public class VehicleFleetController : MonoBehaviour
     {
+        public static event Action<VehicleData> OnVehicleSelected;
+        public static VehicleData SelectedVehicle { get; private set; }
+
         private static readonly VehicleData[] Vehicles =
         {
             new VehicleData { Id = "mark",    Name = "Mark",     Color = "purple", Status = VehicleStatus.Intervention },
@@ -95,6 +99,19 @@ namespace GuidanceUI.UI
         {
             _panelOpen = false;
             if (_panel != null) _panel.style.display = DisplayStyle.None;
+        }
+
+        private void SelectVehicle(VehicleData v)
+        {
+            SelectedVehicle = SelectedVehicle?.Id == v.Id ? null : v;
+            OnVehicleSelected?.Invoke(SelectedVehicle);
+            ClosePanel();
+        }
+
+        public static void Deselect()
+        {
+            SelectedVehicle = null;
+            OnVehicleSelected?.Invoke(null);
         }
 
         private void SetFilter(string filter)
@@ -244,6 +261,14 @@ namespace GuidanceUI.UI
                 btn.AddToClassList("btn-resume");
                 card.Add(btn);
             }
+
+            var captured = v;
+            card.RegisterCallback<ClickEvent>(evt =>
+            {
+                if (evt.target is Button) return;
+                SelectVehicle(captured);
+                evt.StopPropagation();
+            });
 
             return card;
         }

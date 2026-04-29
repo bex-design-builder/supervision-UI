@@ -32,10 +32,7 @@
     -unity-font-style: bold;
 }
 
-/* 44×44 touch target */
 .btn-close {
-    width: 44px;
-    height: 44px;
     background-color: rgba(255, 255, 255, 0.06);
     border-width: 0;
     border-top-left-radius: 12px;
@@ -43,9 +40,10 @@
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     color: rgb(176, 182, 188);
-    font-size: 16px;
+    font-size: 13px;
+    -unity-font-style: bold;
     -unity-text-align: middle-center;
-    padding: 0;
+    padding: 10px 14px;
 }
 
 .btn-close:hover  { background-color: rgba(255, 255, 255, 0.10); }
