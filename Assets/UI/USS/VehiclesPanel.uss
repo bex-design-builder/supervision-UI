@@ -44,7 +44,6 @@
     margin-right: 12px;
 }
 
-.vtog-stat:last-child { margin-right: 0; }
 
 .vtog-dot {
     width: 7px;

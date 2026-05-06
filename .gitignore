@@ -3,8 +3,8 @@ Library/
 Temp/
 Logs/
 obj/
-Build/
 Builds/
+!docs/Build/
 UserSettings/
 
 # Visual Studio / Rider

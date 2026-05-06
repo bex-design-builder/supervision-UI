@@ -24,7 +24,7 @@
                     <ui:Button name="btn-filter-working"    text="Working"    class="vehicles-filter-pill" />
                     <ui:Button name="btn-filter-idle"       text="Idle"       class="vehicles-filter-pill" />
                 </ui:VisualElement>
-                <ui:Button name="btn-close-vehicles" text="✕" class="btn-close-vehicles" />
+                <ui:Button name="btn-close-vehicles" text="X" class="btn-close-vehicles" />
             </ui:VisualElement>
             <ui:ScrollView name="vehicles-list" class="vehicles-list"
                            vertical-scroller-visibility="Hidden"
@@ -33,10 +33,10 @@
 
         <!-- Map controls — right edge column: E-stop then zoom -->
         <ui:VisualElement name="map-controls" class="map-controls">
-            <ui:Button name="btn-estop" text="&#x25A0;" class="btn-estop" />
+            <ui:Button name="btn-estop" text="STOP" class="btn-estop" />
             <ui:VisualElement name="zoom-controls" class="zoom-controls">
                 <ui:Button name="btn-zoom-in"  text="+" class="btn-zoom btn-zoom-in"  />
-                <ui:Button name="btn-zoom-out" text="−" class="btn-zoom btn-zoom-out" />
+                <ui:Button name="btn-zoom-out" text="-" class="btn-zoom btn-zoom-out" />
             </ui:VisualElement>
         </ui:VisualElement>
 
@@ -51,7 +51,7 @@
                     <ui:VisualElement name="vehicle-header-row" class="vehicle-header-row">
                         <ui:VisualElement name="vehicle-header-avatar" class="vehicle-header-avatar" />
                         <ui:Label name="vehicle-header-name" class="vehicle-header-name" text="" />
-                        <ui:Button name="btn-vfilter-close" text="✕" class="btn-close" />
+                        <ui:Button name="btn-vfilter-close" text="X" class="btn-close" />
                     </ui:VisualElement>
                     <ui:VisualElement class="sheet-header-row">
                         <ui:VisualElement class="sheet-tabs">
@@ -70,7 +70,7 @@
                     <ui:VisualElement class="chat-input-wrap">
                         <ui:TextField name="chat-input" label="" class="chat-input"
                                       placeholder-string="Direct a vehicle or ask anything..." />
-                        <ui:Button name="btn-send" text="↑" class="btn-send" />
+                        <ui:Button name="btn-send" text="^" class="btn-send" />
                     </ui:VisualElement>
                 </ui:VisualElement>
 
@@ -92,7 +92,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="new-job-panel-header">
                     <ui:Label text="New job" class="new-job-panel-title" />
-                    <ui:Button name="btn-close-new-job" text="✕" class="btn-close" />
+                    <ui:Button name="btn-close-new-job" text="X" class="btn-close" />
                 </ui:VisualElement>
                 <ui:ScrollView name="new-job-messages" class="chat-messages"
                                vertical-scroller-visibility="Hidden"
@@ -100,7 +100,7 @@
                 <ui:VisualElement class="chat-input-wrap">
                     <ui:TextField name="new-job-input" label="" class="chat-input"
                                   placeholder-string="What do you want to build?" />
-                    <ui:Button name="btn-new-job-send" text="↑" class="btn-send" />
+                    <ui:Button name="btn-new-job-send" text="^" class="btn-send" />
                 </ui:VisualElement>
             </ui:VisualElement>
 

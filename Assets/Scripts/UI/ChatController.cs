@@ -28,7 +28,7 @@ namespace GuidanceUI.UI
             var welcome = BuildSystem("Hi there, what would you like to get done?");
             _messages.Add(welcome);
 
-            var stuck = BuildVehicle("Mark", "‼️ Vehicle stuck", "purple");
+            var stuck = BuildVehicle("Mark", "!! Vehicle stuck", "purple");
             _messages.Add(stuck);
             _lastMessage = stuck;
 
