@@ -243,8 +243,6 @@ namespace GuidanceUI.UI
             if (!_ready || _isDesktop) return;
 
             var activeHandle = ActiveHandle;
-            var activeScroll = ActiveScroll;
-
             bool onHandle = activeHandle != null && activeHandle.worldBound.Contains(evt.position);
             bool onSheet  = _sheet.worldBound.Contains(evt.position);
 
@@ -255,18 +253,13 @@ namespace GuidanceUI.UI
                 return;
             }
 
-            if (onSheet && _state != SnapState.Full)
-            {
-                BeginDrag(evt.position.y);
-                evt.StopPropagation();
-                return;
-            }
+            if (!onSheet) return;
 
-            if (onSheet && _state == SnapState.Full && (activeScroll == null || activeScroll.scrollOffset.y <= 0.5f))
-            {
-                BeginDrag(evt.position.y);
-                evt.StopPropagation();
-            }
+            // At full snap only drag from handle — let scroll views handle touches freely
+            if (_state == SnapState.Full) return;
+
+            BeginDrag(evt.position.y);
+            evt.StopPropagation();
         }
 
         private void OnPointerMove(PointerMoveEvent evt)
