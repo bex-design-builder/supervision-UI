@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -47,6 +48,18 @@ namespace GuidanceUI.UI
         private bool  _isDragging;
         private float _dragStartY;
         private float _dragStartHeight;
+        private float _dragPrevY;
+        private float _dragVelocity;  // positive = moving up
+
+        // ── Keyboard offset (WebGL mobile) ────────────────────────────────
+        private float _kbBottom;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        [DllImport("__Internal")]
+        private static extern float GetKeyboardHeightFraction();
+#else
+        private static float GetKeyboardHeightFraction() => 0f;
+#endif
 
         public static event Action<float, bool> OnHeightChanged;
 
@@ -104,6 +117,18 @@ namespace GuidanceUI.UI
             ApplyDesktopLayout();
 
             _root.RegisterCallback<GeometryChangedEvent>(OnRootLayout);
+        }
+
+        void Update()
+        {
+            if (_isDesktop || _sheet == null || !_ready) return;
+            float fraction = GetKeyboardHeightFraction();
+            float target   = fraction * _root.resolvedStyle.height;
+            if (Mathf.Abs(target - _kbBottom) > 1f)
+            {
+                _kbBottom = target;
+                _sheet.style.bottom = _kbBottom;
+            }
         }
 
         void OnDestroy()
@@ -218,6 +243,10 @@ namespace GuidanceUI.UI
             OnHeightChanged?.Invoke(target, animate);
         }
 
+        private SnapState SnapToward(int dir, SnapState from) => dir > 0
+            ? from switch { SnapState.Peek => SnapState.Mid, _ => SnapState.Full }
+            : from switch { SnapState.Full => SnapState.Mid, _ => SnapState.Peek };
+
         private float HeightFor(SnapState s) => s switch
         {
             SnapState.Peek => PeekHeight,
@@ -255,8 +284,13 @@ namespace GuidanceUI.UI
 
             if (!onSheet) return;
 
-            // At full snap only drag from handle — let scroll views handle touches freely
-            if (_state == SnapState.Full) return;
+            if (_state == SnapState.Full)
+            {
+                // Only drag when scroll is already at the top — otherwise let scroll view handle
+                var active = ActiveScroll;
+                bool atTop = active == null || active.scrollOffset.y <= 0.5f;
+                if (!atTop) return;
+            }
 
             BeginDrag(evt.position.y);
             evt.StopPropagation();
@@ -265,6 +299,8 @@ namespace GuidanceUI.UI
         private void OnPointerMove(PointerMoveEvent evt)
         {
             if (!_isDragging || _isDesktop) return;
+            _dragVelocity = _dragPrevY - evt.position.y; // positive = moving up
+            _dragPrevY    = evt.position.y;
             float delta  = _dragStartY - evt.position.y;
             float height = Mathf.Clamp(_dragStartHeight + delta, PeekHeight, FullHeight);
             _sheet.style.height = height;
@@ -276,13 +312,19 @@ namespace GuidanceUI.UI
             if (!_isDragging) return;
             float current = _sheet.resolvedStyle.height;
             _isDragging = IsDragging = false;
-            SetSnap(Nearest(current), animate: true);
+
+            SnapState target;
+            if      (_dragVelocity >  6f) target = SnapToward( 1, _state);
+            else if (_dragVelocity < -6f) target = SnapToward(-1, _state);
+            else                          target = Nearest(current);
+            SetSnap(target, animate: true);
         }
 
         private void CancelDrag()
         {
             if (!_isDragging) return;
-            _isDragging = IsDragging = false;
+            _isDragging   = IsDragging = false;
+            _dragVelocity = 0f;
             SetSnap(_state, animate: true);
         }
 
@@ -292,6 +334,8 @@ namespace GuidanceUI.UI
             _isDragging = IsDragging = true;
             _dragStartY      = startY;
             _dragStartHeight = _sheet.resolvedStyle.height;
+            _dragPrevY       = startY;
+            _dragVelocity    = 0f;
             _sheet.RemoveFromClassList("sheet-animated");
         }
 

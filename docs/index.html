@@ -77,29 +77,15 @@
       // config.matchWebGLToCanvasSize = false;
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-
+        // Mobile: fill the whole browser client area
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
         document.getElementsByTagName('head')[0].appendChild(meta);
         container.className = "unity-mobile";
         canvas.className = "unity-mobile";
-
-        // Resize canvas when virtual keyboard appears so the input stays above it
-        function applyViewport() {
-          var vv = window.visualViewport;
-          if (!vv) return;
-          canvas.style.height = vv.height + 'px';
-          canvas.style.marginTop = vv.offsetTop + 'px';
-        }
-        if (window.visualViewport) {
-          window.visualViewport.addEventListener('resize', applyViewport);
-          window.visualViewport.addEventListener('scroll', applyViewport);
-        }
-
       } else {
-        // Desktop style: fill the browser window
+        // Desktop: fill the browser window
         canvas.style.width = "100%";
         canvas.style.height = "100vh";
         container.style.width = "100%";
